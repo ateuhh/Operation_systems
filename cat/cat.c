@@ -5,7 +5,7 @@
 
 const int buffer_size = 4096;
 
-void copy (char* buffer, int a) 
+void copy_in_stream (char* buffer, int a) 
 {
 	ssize_t buf_r;
 	while ((buf_r=read(a, buffer, buffer_size))>0)
@@ -16,14 +16,14 @@ void copy (char* buffer, int a)
 int main(int argc, char** argv) {
 	char* buffer = (char*) malloc(buffer_size);
 	if (argc == 1) {
-		copy(0, buffer);
+		copy_in_stream( buffer,0);
 	} else {
 		size_t i;
 		for (i = 1; i < argc; i++) {
 			int a = open(argv[i], O_RDONLY);
 			if (a == -1)
 				continue;
-			copy(a, buffer);
+			copy_in_stream( buffer, a);
 			close(a);
 		}
 	}
